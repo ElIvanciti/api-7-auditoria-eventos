@@ -1,10 +1,11 @@
 const express = require("express");
-const mongoose = require("mongoose");
+const connectDB = require("./src/models/db");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
 const winston = require("winston");
 
 dotenv.config();
+connectDB();
 
 const app = express();
 
