@@ -3,11 +3,13 @@ const connectDB = require("./src/models/db");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
 const winston = require("winston");
+const auditoriaRoutes = require("./src/routes/AuditoriaRoutes");
 
 dotenv.config();
 connectDB();
 
 const app = express();
+app.use("/api/auditoria", auditoriaRoutes);
 
 app.use(express.json());
 app.use(helmet());
