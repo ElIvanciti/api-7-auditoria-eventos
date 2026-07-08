@@ -4,12 +4,14 @@ const dotenv = require("dotenv");
 const helmet = require("helmet");
 const winston = require("winston");
 const auditoriaRoutes = require("./src/routes/AuditoriaRoutes");
+const auditoriaMiddleware = require("./src/middlewares/auditoriaMiddleware");
 
 dotenv.config();
 connectDB();
 
 const app = express();
 app.use("/api/auditoria", auditoriaRoutes);
+app.use(auditoriaMiddleware);
 
 app.use(express.json());
 app.use(helmet());
