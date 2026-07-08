@@ -65,3 +65,5 @@ if (process.env.NODE_ENV !== "test") {
     console.log(`API 7 ejecutándose en el puerto ${PORT}`);
   });
 }
+
+module.exports = app;
