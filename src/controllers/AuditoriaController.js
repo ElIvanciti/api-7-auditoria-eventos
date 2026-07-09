@@ -3,6 +3,8 @@ const connectDB = require("../models/db");
 
 const obtenerLogs = async (req, res) => {
   try {
+    await connectDB();
+
     const logs = await Auditoria.find().sort({ createdAt: -1 });
 
     res.json({
@@ -12,12 +14,15 @@ const obtenerLogs = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       mensaje: "Error al obtener los logs de auditoría",
+      error: error.message,
     });
   }
 };
 
 const obtenerLogPorId = async (req, res) => {
   try {
+    await connectDB();
+
     const log = await Auditoria.findById(req.params.id);
 
     if (!log) {
