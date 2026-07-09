@@ -1,5 +1,5 @@
 const express = require("express");
-const connectDB = require("./src/models/db");
+//const connectDB = require("./src/models/db");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
 const auditoriaRoutes = require("./src/routes/AuditoriaRoutes");
