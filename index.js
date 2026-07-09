@@ -2,8 +2,8 @@ const express = require("express");
 //const connectDB = require("./src/models/db");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
-const auditoriaRoutes = require("./src/routes/AuditoriaRoutes");
-const auditoriaMiddleware = require("./src/middlewares/auditoriaMiddleware");
+//const auditoriaRoutes = require("./src/routes/AuditoriaRoutes");
+//const auditoriaMiddleware = require("./src/middlewares/auditoriaMiddleware");
 
 dotenv.config();
 
@@ -18,8 +18,8 @@ app.get("/", (req, res) => {
   res.send("API 7 - Auditoría de Eventos Críticos");
 });
 
-app.use(auditoriaMiddleware);
-app.use("/api/auditoria", auditoriaRoutes);
+//app.use(auditoriaMiddleware);
+//app.use("/api/auditoria", auditoriaRoutes);
 
 app.post("/api/prueba", (req, res) => {
   res.status(201).json({
