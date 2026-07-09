@@ -10,11 +10,11 @@ dotenv.config();
 connectDB();
 
 const app = express();
-app.use("/api/auditoria", auditoriaRoutes);
-app.use(auditoriaMiddleware);
 
 app.use(express.json());
 app.use(helmet());
+app.use(auditoriaMiddleware);
+app.use("/api/auditoria", auditoriaRoutes);
 
 // Middleware de auditoría para POST, PUT y DELETE
 app.use((req, res, next) => {
