@@ -1,4 +1,5 @@
 const Auditoria = require("../models/Auditoria");
+const connectDB = require("../models/db");
 
 const auditoriaMiddleware = (req, res, next) => {
   const metodosAuditables = ["POST", "PUT", "DELETE"];
@@ -9,6 +10,8 @@ const auditoriaMiddleware = (req, res, next) => {
 
   res.on("finish", async () => {
     try {
+      await connectDB();
+
       await Auditoria.create({
         usuarioId: req.body.usuarioId || "anonymous",
         accion: `${req.method} ${req.originalUrl}`,
