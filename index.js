@@ -29,7 +29,7 @@ app.post("/api/prueba", (req, res) => {
 
 const PORT = process.env.PORT || 5100;
 
-if (process.env.NODE_ENV !== "production") {
+if (process.env.VERCEL) {
   app.listen(PORT, () => {
     console.log(`API 7 ejecutándose en el puerto ${PORT}`);
   });
