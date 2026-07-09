@@ -12,7 +12,7 @@ const app = express();
 app.use(express.json());
 app.use(helmet());
 
-connectDB();
+//connectDB();
 
 app.get("/", (req, res) => {
   res.send("API 7 - Auditoría de Eventos Críticos");
