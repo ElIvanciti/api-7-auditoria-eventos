@@ -2,55 +2,24 @@ const express = require("express");
 const connectDB = require("./src/models/db");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
-const winston = require("winston");
 const auditoriaRoutes = require("./src/routes/AuditoriaRoutes");
 const auditoriaMiddleware = require("./src/middlewares/auditoriaMiddleware");
 
 dotenv.config();
-connectDB();
 
 const app = express();
 
 app.use(express.json());
 app.use(helmet());
-app.use(auditoriaMiddleware);
-app.use("/api/auditoria", auditoriaRoutes);
 
-// Middleware de auditoría para POST, PUT y DELETE
-app.use((req, res, next) => {
-  const start = Date.now();
-
-  res.on("finish", () => {
-    if (["POST", "PUT", "DELETE"].includes(req.method)) {
-      const log = {
-        timestamp: new Date().toISOString(),
-        ip: req.ip,
-        method: req.method,
-        url: req.originalUrl,
-        statusCode: res.statusCode,
-        userId: req.headers["user-id"] || "anonymous",
-        duration: `${Date.now() - start}ms`,
-      };
-
-      logger.info(log);
-    }
-  });
-
-  next();
-});
-
-const logger = winston.createLogger({
-  level: "info",
-  format: winston.format.json(),
-  transports: [
-    new winston.transports.File({ filename: "audit.log" }),
-    new winston.transports.Console(),
-  ],
-});
+connectDB();
 
 app.get("/", (req, res) => {
   res.send("API 7 - Auditoría de Eventos Críticos");
 });
+
+app.use(auditoriaMiddleware);
+app.use("/api/auditoria", auditoriaRoutes);
 
 app.post("/api/prueba", (req, res) => {
   res.status(201).json({
