@@ -1,4 +1,5 @@
 const Auditoria = require("../models/Auditoria");
+const connectDB = require("../models/db");
 
 const obtenerLogs = async (req, res) => {
   try {
@@ -29,6 +30,7 @@ const obtenerLogPorId = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       mensaje: "Error al obtener el log de auditoría",
+      error: error.message,
     });
   }
 };
