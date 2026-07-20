@@ -1,0 +1,2 @@
+{"level":"info","message":{"duration":"5ms","ip":"::ffff:127.0.0.1","method":"POST","statusCode":404,"timestamp":"2026-07-20T17:34:18.681Z","url":"/api/auditoria","userId":"anonymous"}}
+{"level":"info","message":{"duration":"2ms","ip":"::ffff:127.0.0.1","method":"POST","statusCode":201,"timestamp":"2026-07-20T17:35:16.902Z","url":"/api/prueba","userId":"anonymous"}}
