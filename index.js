@@ -3,6 +3,10 @@ const connectDB = require("./src/models/db");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
 const winston = require("winston");
+
+const authRoutes = require("./src/routes/AuthRoutes");
+const verificarToken = require("./src/middlewares/authMiddleware");
+
 const auditoriaRoutes = require("./src/routes/AuditoriaRoutes");
 const auditoriaMiddleware = require("./src/middlewares/auditoriaMiddleware");
 
@@ -10,11 +14,30 @@ dotenv.config();
 connectDB();
 
 const app = express();
-app.use("/api/auditoria", auditoriaRoutes);
-app.use(auditoriaMiddleware);
 
 app.use(express.json());
 app.use(helmet());
+
+// Ruta pública para generar el JWT
+app.use("/auth", authRoutes);
+
+// Todas las rutas a partir de aquí requieren token
+app.use(verificarToken);
+
+// Middleware de auditoría
+app.use(auditoriaMiddleware);
+
+// Rutas protegidas
+app.use("/api/auditoria", auditoriaRoutes);
+
+const logger = winston.createLogger({
+  level: "info",
+  format: winston.format.json(),
+  transports: [
+    new winston.transports.File({ filename: "audit.log" }),
+    new winston.transports.Console(),
+  ],
+});
 
 // Middleware de auditoría para POST, PUT y DELETE
 app.use((req, res, next) => {
@@ -37,15 +60,6 @@ app.use((req, res, next) => {
   });
 
   next();
-});
-
-const logger = winston.createLogger({
-  level: "info",
-  format: winston.format.json(),
-  transports: [
-    new winston.transports.File({ filename: "audit.log" }),
-    new winston.transports.Console(),
-  ],
 });
 
 app.get("/", (req, res) => {
