@@ -1,19 +1,11 @@
 const jwt = require("jsonwebtoken");
 
 const verificarToken = (req, res, next) => {
-  const authorization = req.headers.authorization;
+  const token = req.headers["app-token"];
 
-  if (!authorization) {
+  if (!token) {
     return res.status(401).json({
       mensaje: "Token requerido",
-    });
-  }
-
-  const [tipo, token] = authorization.split(" ");
-
-  if (tipo !== "Bearer" || !token) {
-    return res.status(401).json({
-      mensaje: "Formato de token inválido",
     });
   }
 
